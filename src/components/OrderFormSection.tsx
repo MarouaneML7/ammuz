@@ -19,7 +19,7 @@ const OrderFormSection = () => {
     // Only send if the phone has at least 10 numbers, no errors, and hasn't been sent yet
     if (formData.phone.length >= 10 && !phoneError && !hasSentPartial) {
       // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBN52ybdYLzRDfUhcgSjWcR_WLRbBT8E3XITTaf3kIMMov57fRQZ60ONPogFxG5osJ/exec";
       
       try {
         await fetch(GOOGLE_SCRIPT_URL, {

@@ -13,10 +13,10 @@ const HeroSection = () => {
         {/* Product Image */}
         <div className="flex w-full justify-center md:w-1/2">
           <img
-            src={heroProduct}
+
             alt="زيت أموز للشعر"
-            className="h-auto max-h-[500px] w-auto drop-shadow-2xl"
-          />
+            className="h-auto max-h-[500px] w-auto drop-shadow-2xl object-scale-down" src="/lovable-uploads/d030b2eb-7e11-4424-8796-73bed878ee80.png" />
+
         </div>
 
         {/* Text Content */}
@@ -34,14 +34,14 @@ const HeroSection = () => {
           </p>
           <a
             href="#order"
-            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg"
-          >
+            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg">
+
             اطلبي الآن والدفع عند الاستلام 🛒
           </a>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;

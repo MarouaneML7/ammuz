@@ -8,7 +8,7 @@ const OrderFormSection = () => {
     city: "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Add a loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +20,6 @@ const OrderFormSection = () => {
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        // We use text/plain to avoid CORS preflight errors with Google Apps Script
         headers: {
           "Content-Type": "text/plain;charset=utf-8", 
         },
@@ -55,19 +54,24 @@ const OrderFormSection = () => {
               alt="زيت أموز"
               className="mb-6 h-64 w-auto drop-shadow-2xl"
             />
-            <p className="mb-2 text-lg text-primary-foreground/60 line-through">
-              كان ب 299 درهم
-            </p>
-            <p className="mb-4 text-4xl font-extrabold text-gradient-gold">
-              الآن ب 199 درهم فقط
-            </p>
-            <p className="text-lg text-primary-foreground/80">
-              🚚 توصيل مجاني لباب الدار – الدفع عند الاستلام
-            </p>
+            
+            {/* 👇 THIS IS THE NEW TARGET DIV FOR THE SCROLL 👇 */}
+            <div id="order-form" className="scroll-mt-6 w-full">
+              <p className="mb-2 text-lg text-primary-foreground/60 line-through">
+                كان ب 299 درهم
+              </p>
+              <p className="mb-4 text-4xl font-extrabold text-gradient-gold">
+                الآن ب 199 درهم فقط
+              </p>
+              <p className="mb-6 text-lg text-primary-foreground/80">
+                🚚 توصيل مجاني لباب الدار – الدفع عند الاستلام
+              </p>
+            </div>
           </div>
 
           {/* Form */}
-          <div id="order-form" className="w-full md:w-1/2 scroll-mt-6">
+          {/* 👇 THE ID WAS REMOVED FROM HERE SO IT DOESN'T SKIP THE PRICE 👇 */}
+          <div className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
                 <div className="mb-4 text-5xl">🎉</div>

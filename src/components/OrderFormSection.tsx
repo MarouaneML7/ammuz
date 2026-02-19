@@ -15,7 +15,7 @@ const OrderFormSection = () => {
     setIsLoading(true);
 
     // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7aetzicOAWWOirJnJS40tZEVDx_FCAxfBtm5xgJ9SRZjSsZNc1N47CWYXAiV8acR6/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8kQUxCd1ZG11aeLUz3HX7GA4wOpgE_1JeazhWkOGtS7pI1swNGEhx4bUILVdNI3E/exec";
 
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {

@@ -8,18 +8,19 @@ const OrderFormSection = () => {
     city: "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add a loading state
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx8kQUxCd1ZG11aeLUz3HX7GA4wOpgE_1JeazhWkOGtS7pI1swNGEhx4bUILVdNI3E/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBN52ybdYLzRDfUhcgSjWcR_WLRbBT8E3XITTaf3kIMMov57fRQZ60ONPogFxG5osJ/exec";
 
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
+        // We use text/plain to avoid CORS preflight errors with Google Apps Script
         headers: {
           "Content-Type": "text/plain;charset=utf-8", 
         },
@@ -54,23 +55,18 @@ const OrderFormSection = () => {
               alt="زيت أموز"
               className="mb-6 h-64 w-auto drop-shadow-2xl"
             />
-            
-            {/* 👇 THIS IS THE NEW TARGET DIV FOR THE SCROLL 👇 */}
-            <div id="order-form" className="scroll-mt-6 w-full">
-              <p className="mb-2 text-lg text-primary-foreground/60 line-through">
-                كان ب 299 درهم
-              </p>
-              <p className="mb-4 text-4xl font-extrabold text-gradient-gold">
-                الآن ب 199 درهم فقط
-              </p>
-              <p className="mb-6 text-lg text-primary-foreground/80">
-                🚚 توصيل مجاني لباب الدار – الدفع عند الاستلام
-              </p>
-            </div>
+            <p className="mb-2 text-lg text-primary-foreground/60 line-through">
+              كان ب 299 درهم
+            </p>
+            <p className="mb-4 text-4xl font-extrabold text-gradient-gold">
+              الآن ب 199 درهم فقط
+            </p>
+            <p className="text-lg text-primary-foreground/80">
+              🚚 توصيل مجاني لباب الدار – الدفع عند الاستلام
+            </p>
           </div>
 
           {/* Form */}
-          {/* 👇 THE ID WAS REMOVED FROM HERE SO IT DOESN'T SKIP THE PRICE 👇 */}
           <div className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
@@ -144,7 +140,7 @@ const OrderFormSection = () => {
                   disabled={isLoading}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "اضغطي هنا لتأكيد الطلب الآن"}
+                  {isLoading ? "جاري إرسال الطلب..." : "اضغطي هنا لتأكيد الطلب الآن ✨"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

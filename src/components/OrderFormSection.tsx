@@ -8,10 +8,36 @@ const OrderFormSection = () => {
     city: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add a loading state
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+
+    // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby7aetzicOAWWOirJnJS40tZEVDx_FCAxfBtm5xgJ9SRZjSsZNc1N47CWYXAiV8acR6/exec";
+
+    try {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        // We use text/plain to avoid CORS preflight errors with Google Apps Script
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8", 
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      alert("عذراً، حدث خطأ أثناء إرسال الطلب. المرجو المحاولة مرة أخرى.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -70,6 +96,7 @@ const OrderFormSection = () => {
                     }
                     placeholder="أدخلي اسمك الكامل"
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
+                    disabled={isLoading}
                   />
                 </div>
 
@@ -87,6 +114,7 @@ const OrderFormSection = () => {
                     placeholder="06XXXXXXXX"
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
                     dir="ltr"
+                    disabled={isLoading}
                   />
                 </div>
 
@@ -103,14 +131,16 @@ const OrderFormSection = () => {
                     }
                     placeholder="مثال: الدار البيضاء"
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
+                    disabled={isLoading}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg"
+                  disabled={isLoading}
+                  className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  اضغطي هنا لتأكيد الطلب الآن ✨
+                  {isLoading ? "جاري إرسال الطلب..." : "اضغطي هنا لتأكيد الطلب الآن ✨"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

@@ -9,9 +9,18 @@ const OrderFormSection = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // 👇 1. We added a new state to track phone errors
+  const [phoneError, setPhoneError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 👇 2. Before submitting, we double-check that there are no errors
+    if (phoneError) {
+      return; // Stop the function from sending the data if there's an error
+    }
+
     setIsLoading(true);
 
     // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
@@ -55,7 +64,6 @@ const OrderFormSection = () => {
               className="mb-6 h-64 w-auto drop-shadow-2xl"
             />
             
-            {/* 👇 THIS IS THE NEW TARGET DIV FOR THE SCROLL 👇 */}
             <div id="order-form" className="scroll-mt-6 w-full">
               <p className="mb-2 text-lg text-primary-foreground/60 line-through">
                 كان ب 299 درهم
@@ -70,7 +78,6 @@ const OrderFormSection = () => {
           </div>
 
           {/* Form */}
-          {/* 👇 THE ID WAS REMOVED FROM HERE SO IT DOESN'T SKIP THE PRICE 👇 */}
           <div className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
@@ -104,6 +111,7 @@ const OrderFormSection = () => {
                   />
                 </div>
 
+                {/* 👇 3. Updated Phone Input with Validation 👇 */}
                 <div className="mb-5">
                   <label className="mb-2 block text-sm font-bold text-foreground">
                     رقم الهاتف
@@ -112,14 +120,36 @@ const OrderFormSection = () => {
                     type="tel"
                     required
                     value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFormData({ ...formData, phone: value });
+                      
+                      // Check if the input contains anything that is NOT a number, a space, or a + sign
+                      if (/[^0-9\s+]/.test(value)) {
+                        setPhoneError("المرجو إدخال أرقام فقط ⚠️");
+                      } else {
+                        setPhoneError(""); // Clear the error if it's correct
+                      }
+                    }}
+                    // Built-in browser protection
+                    pattern="[0-9\s+]+"
+                    title="المرجو إدخال أرقام فقط"
                     placeholder="06XXXXXXXX"
-                    className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
+                    // Change border to red if there is an error
+                    className={`w-full rounded-lg border bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 ${
+                      phoneError 
+                        ? "border-red-500 focus:ring-red-500" 
+                        : "border-input focus:ring-accent"
+                    }`}
                     dir="ltr"
                     disabled={isLoading}
                   />
+                  {/* Show the red error message under the input if they type letters */}
+                  {phoneError && (
+                    <p className="mt-2 text-sm font-bold text-red-500">
+                      {phoneError}
+                    </p>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -141,7 +171,7 @@ const OrderFormSection = () => {
 
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || !!phoneError} // Disable button if loading OR if there is a phone error
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
                   {isLoading ? "جاري إرسال الطلب..." : "اضغطي هنا لتأكيد الطلب الآن ✨"}

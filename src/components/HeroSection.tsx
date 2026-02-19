@@ -24,7 +24,7 @@ const HeroSection = () => {
           <span className="mb-4 inline-block rounded-full bg-purple-light px-4 py-1.5 text-sm font-medium text-primary">
             🌿 تركيبة طبيعية 100%
           </span>
-          <h1 className="mb-6 text-3xl font-extrabold leading-tight text-primary md:text-5xl">
+          <h1 className="text-3xl font-extrabold leading-tight text-primary my-[14px] md:text-4xl mb-[20px] mt-[14px]">
             استعيدي كثافة شعرك وودعي التساقط المقلق مع{" "}
             <span className="text-gradient-gold">أموز</span>
           </h1>
@@ -34,8 +34,8 @@ const HeroSection = () => {
           </p>
           <a
             href="#order-form"
-            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg"
-          >
+            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg">
+
             اطلبي الآن والدفع عند الاستلام
           </a>
         </div>

@@ -8,10 +8,10 @@ const SolutionSection = () => {
           {/* Image */}
           <div className="w-full md:w-1/2">
             <img
-              src={productIngredients}
+
               alt="زيت أموز مع المكونات الطبيعية"
-              className="w-full rounded-2xl object-cover shadow-lg"
-            />
+              className="w-full rounded-2xl object-cover shadow-lg" src="/lovable-uploads/cf516d00-b1d5-4018-a740-5eb346aa7eb4.webp" />
+
           </div>
 
           {/* Text */}
@@ -29,8 +29,8 @@ const SolutionSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default SolutionSection;

@@ -5,7 +5,7 @@ const StickyBar = () => {
         href="#order-form"
         className="gradient-gold shadow-gold block w-full rounded-full py-3 text-center text-lg font-bold text-primary transition-all hover:scale-[1.02]"
       >
-        اشتري الآن 🛒
+        اشتري الآن
       </a>
     </div>
   );

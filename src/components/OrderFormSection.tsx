@@ -9,16 +9,43 @@ const OrderFormSection = () => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  // 👇 1. We added a new state to track phone errors
   const [phoneError, setPhoneError] = useState("");
+  
+  // 👇 1. New state to track if we already captured this lead so we don't send duplicates
+  const [hasSentPartial, setHasSentPartial] = useState(false);
+
+  // 👇 2. The function that captures the number silently in the background
+  const handlePhoneBlur = async () => {
+    // Only send if the phone has at least 10 numbers, no errors, and hasn't been sent yet
+    if (formData.phone.length >= 10 && !phoneError && !hasSentPartial) {
+      // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+      
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8", 
+          },
+          // We send what we have, and flag it as an abandoned cart in the City column
+          body: JSON.stringify({
+            name: formData.name || "لم يكتب الاسم",
+            phone: formData.phone,
+            city: "⚠️ سلة متروكة (لم يكمل الطلب)" 
+          }),
+        });
+        setHasSentPartial(true); // Mark as sent so we don't spam the sheet
+      } catch (error) {
+        console.error("Background sync failed");
+      }
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // 👇 2. Before submitting, we double-check that there are no errors
     if (phoneError) {
-      return; // Stop the function from sending the data if there's an error
+      return; 
     }
 
     setIsLoading(true);
@@ -111,7 +138,6 @@ const OrderFormSection = () => {
                   />
                 </div>
 
-                {/* 👇 3. Updated Phone Input with Validation 👇 */}
                 <div className="mb-5">
                   <label className="mb-2 block text-sm font-bold text-foreground">
                     رقم الهاتف
@@ -124,18 +150,17 @@ const OrderFormSection = () => {
                       const value = e.target.value;
                       setFormData({ ...formData, phone: value });
                       
-                      // Check if the input contains anything that is NOT a number, a space, or a + sign
                       if (/[^0-9\s+]/.test(value)) {
                         setPhoneError("المرجو إدخال أرقام فقط ⚠️");
                       } else {
-                        setPhoneError(""); // Clear the error if it's correct
+                        setPhoneError(""); 
                       }
                     }}
-                    // Built-in browser protection
+                    // 👇 3. We added the onBlur event here! 👇
+                    onBlur={handlePhoneBlur}
                     pattern="[0-9\s+]+"
                     title="المرجو إدخال أرقام فقط"
                     placeholder="06XXXXXXXX"
-                    // Change border to red if there is an error
                     className={`w-full rounded-lg border bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 ${
                       phoneError 
                         ? "border-red-500 focus:ring-red-500" 
@@ -144,7 +169,6 @@ const OrderFormSection = () => {
                     dir="ltr"
                     disabled={isLoading}
                   />
-                  {/* Show the red error message under the input if they type letters */}
                   {phoneError && (
                     <p className="mt-2 text-sm font-bold text-red-500">
                       {phoneError}
@@ -171,10 +195,10 @@ const OrderFormSection = () => {
 
                 <button
                   type="submit"
-                  disabled={isLoading || !!phoneError} // Disable button if loading OR if there is a phone error
+                  disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "اضغطي هنا لتأكيد الطلب الآن ✨"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 199 درهم فقط ✨"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

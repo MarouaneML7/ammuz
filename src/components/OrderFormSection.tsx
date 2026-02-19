@@ -67,7 +67,7 @@ const OrderFormSection = () => {
           </div>
 
           {/* Form */}
-          <div className="w-full md:w-1/2">
+          <div id="order-form" className="w-full md:w-1/2 scroll-mt-6">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
                 <div className="mb-4 text-5xl">🎉</div>

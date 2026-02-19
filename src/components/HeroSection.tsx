@@ -36,7 +36,7 @@ const HeroSection = () => {
             href="#order-form"
             className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg"
           >
-            اطلبي الآن والدفع عند الاستلام 🛒
+            اطلبي الآن والدفع عند الاستلام
           </a>
         </div>
       </div>

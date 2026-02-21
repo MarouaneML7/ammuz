@@ -38,6 +38,7 @@ const BenefitsSection = () => {
               src={healthyHair}
               alt="نتائج شعر صحي مع أموز"
               className="w-full rounded-2xl object-cover shadow-lg"
+              loading="lazy"
             />
           </div>
 

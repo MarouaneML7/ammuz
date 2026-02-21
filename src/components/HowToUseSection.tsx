@@ -33,6 +33,7 @@ const HowToUseSection = () => {
               src={howToUse}
               alt="طريقة استعمال زيت أموز"
               className="w-full rounded-2xl object-cover shadow-lg"
+              loading="lazy"
             />
           </div>
 

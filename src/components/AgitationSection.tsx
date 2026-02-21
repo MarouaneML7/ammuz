@@ -18,6 +18,7 @@ const AgitationSection = () => {
               src={hairLossProblem}
               alt="مشكلة تساقط الشعر"
               className="w-full rounded-2xl object-cover shadow-lg"
+              loading="lazy"
             />
           </div>
 

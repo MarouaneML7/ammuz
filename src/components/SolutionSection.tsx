@@ -11,6 +11,7 @@ const SolutionSection = () => {
 
               alt="زيت أموز مع المكونات الطبيعية"
               className="w-full rounded-2xl object-cover shadow-lg" src="/lovable-uploads/cf516d00-b1d5-4018-a740-5eb346aa7eb4.webp" />
+              loading="lazy"
 
           </div>
 

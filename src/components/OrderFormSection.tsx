@@ -88,6 +88,7 @@ const OrderFormSection = () => {
               src={heroProduct}
               alt="زيت أموز"
               className="mb-6 h-64 w-auto drop-shadow-2xl"
+              loading="lazy"
             />
             
             <div id="order-form" className="scroll-mt-6 w-full">

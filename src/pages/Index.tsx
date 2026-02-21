@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import HeroSection from "@/components/HeroSection";
 import AgitationSection from "@/components/AgitationSection";
@@ -12,7 +13,15 @@ import StickyBar from "@/components/StickyBar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen pb-16 md:pb-0">
+    // 👇 1. Add pt-16 md:pt-20 to this main div! 👇
+    <div className="min-h-screen w-full bg-background pt-16 md:pt-20"> 
+      
+      {/* 👇 2. Put the Header right here, exactly above the Hero Section! 👇 */}
+      <Header />
+      
+      <HeroSection />
+      
+      {/* ... the rest of your sections stay exactly the same ... */}
       <HeroSection />
       <AgitationSection />
       <SolutionSection />

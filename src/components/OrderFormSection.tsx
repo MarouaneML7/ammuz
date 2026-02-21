@@ -55,7 +55,33 @@ const OrderFormSection = () => {
       });
 
       if (response.ok) {
+        // 1. Show the success message to the user
         setSubmitted(true);
+        
+        // 👇 2. FIRE THE TRACKING EVENTS HERE! 👇
+        
+        // For Meta Ads (Facebook/Instagram)
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead', {
+            currency: 'MAD',
+            value: 149.00
+          });
+        }
+
+        // For TikTok Ads (Optional, usually tracked as CompletePayment or SubmitForm for COD)
+        if (typeof window !== 'undefined' && (window as any).ttq) {
+          (window as any).ttq.track('CompletePayment', {
+            currency: 'MAD',
+            value: 149.00
+          });
+        }
+        
+        // For Google Ads (Optional, replace 'AW-CONVERSION_ID/LABEL' with your actual IDs)
+        // if (typeof window !== 'undefined' && (window as any).gtag) {
+        //   (window as any).gtag('event', 'conversion', {'send_to': 'AW-CONVERSION_ID/LABEL'});
+        // }
+        // 👆 END OF TRACKING EVENTS 👆
+
       } else {
         throw new Error("Network response was not ok");
       }
@@ -97,7 +123,6 @@ const OrderFormSection = () => {
           </div>
 
           {/* Form */}
-          {/* 👇 We added id="form-wrapper" exactly here! 👇 */}
           <div id="form-wrapper" className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
@@ -190,7 +215,7 @@ const OrderFormSection = () => {
                   disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط ✨"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

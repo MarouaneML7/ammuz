@@ -22,7 +22,6 @@ const Index = () => {
       <HeroSection />
       
       {/* ... the rest of your sections stay exactly the same ... */}
-      <HeroSection />
       <AgitationSection />
       <SolutionSection />
       <IngredientsSection />

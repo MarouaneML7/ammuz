@@ -1,16 +1,13 @@
 const StickyBar = () => {
   return (
-    // 👇 Removed "md:hidden" so it shows on all devices
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card/95 px-4 py-3 backdrop-blur-md">
-      {/* 👇 Added a container to keep the button centered and reasonably sized on large screens */}
-      <div className="container mx-auto flex justify-center">
-        <a
-          href="#order-form" 
-          className="gradient-gold shadow-gold block w-full max-w-md rounded-full py-3 text-center text-lg font-bold text-primary transition-all hover:scale-[1.02]"
-        >
-          اشتري الآن 🛒
-        </a>
-      </div>
+    // 👇 Removed the background/border and moved it to float on the bottom-left
+    <div className="fixed bottom-6 left-6 z-50 md:bottom-8 md:left-8">
+      <a
+        href="#order-form" 
+        className="gradient-gold shadow-gold flex items-center justify-center rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-110 hover:shadow-2xl"
+      >
+        اشتري الآن 🛒
+      </a>
     </div>
   );
 };

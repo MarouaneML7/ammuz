@@ -1,3 +1,4 @@
+import WhatsAppButton from "@/components/WhatsAppButton";
 import HeroSection from "@/components/HeroSection";
 import AgitationSection from "@/components/AgitationSection";
 import SolutionSection from "@/components/SolutionSection";
@@ -30,6 +31,7 @@ const Index = () => {
           © 2026 جميع الحقوق محفوظة | منتج طبيعي مصنوع في المغرب 🇲🇦
         </p>
       </footer>
+      <WhatsAppButton />
     </div>
   );
 };

@@ -2,6 +2,9 @@ import { useState } from "react";
 import heroProduct from "@/assets/hero-product.jpg";
 
 const OrderFormSection = () => {
+  // 🔴 PASTE YOUR GOOGLE APPS SCRIPT URL HERE 👇
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUxw6n4YBvkcaZk0_yX3joNYaPqY3IA0CAcjkXWamMgcdUTGwMsQMDHjBQk8-8sgg/exec";
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -10,31 +13,23 @@ const OrderFormSection = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [phoneError, setPhoneError] = useState("");
-  
-  // 👇 1. New state to track if we already captured this lead so we don't send duplicates
   const [hasSentPartial, setHasSentPartial] = useState(false);
 
-  // 👇 2. The function that captures the number silently in the background
   const handlePhoneBlur = async () => {
-    // Only send if the phone has at least 10 numbers, no errors, and hasn't been sent yet
     if (formData.phone.length >= 10 && !phoneError && !hasSentPartial) {
-      // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUxw6n4YBvkcaZk0_yX3joNYaPqY3IA0CAcjkXWamMgcdUTGwMsQMDHjBQk8-8sgg/exec";
-      
       try {
         await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
           headers: {
             "Content-Type": "text/plain;charset=utf-8", 
           },
-          // We send what we have, and flag it as an abandoned cart in the City column
           body: JSON.stringify({
             name: formData.name || "لم يكتب الاسم",
             phone: formData.phone,
             city: "⚠️ سلة متروكة (لم يكمل الطلب)" 
           }),
         });
-        setHasSentPartial(true); // Mark as sent so we don't spam the sheet
+        setHasSentPartial(true); 
       } catch (error) {
         console.error("Background sync failed");
       }
@@ -49,9 +44,6 @@ const OrderFormSection = () => {
     }
 
     setIsLoading(true);
-
-    // 🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUxw6n4YBvkcaZk0_yX3joNYaPqY3IA0CAcjkXWamMgcdUTGwMsQMDHjBQk8-8sgg/exec";
 
     try {
       const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -105,7 +97,8 @@ const OrderFormSection = () => {
           </div>
 
           {/* Form */}
-          <div className="w-full md:w-1/2">
+          {/* 👇 We added id="form-wrapper" exactly here! 👇 */}
+          <div id="form-wrapper" className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
                 <div className="mb-4 text-5xl">🎉</div>
@@ -156,7 +149,6 @@ const OrderFormSection = () => {
                         setPhoneError(""); 
                       }
                     }}
-                    // 👇 3. We added the onBlur event here! 👇
                     onBlur={handlePhoneBlur}
                     pattern="[0-9\s+]+"
                     title="المرجو إدخال أرقام فقط"
@@ -198,7 +190,7 @@ const OrderFormSection = () => {
                   disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط ✨"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

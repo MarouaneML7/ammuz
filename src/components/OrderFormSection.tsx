@@ -190,7 +190,7 @@ const OrderFormSection = () => {
                   disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط ✨"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط"}
                 </button>
 
                 <p className="mt-4 text-center text-sm text-muted-foreground">

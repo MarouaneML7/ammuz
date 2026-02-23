@@ -16,7 +16,7 @@ const OrderFormSection = () => {
   const [phoneError, setPhoneError] = useState("");
   const [hasSentPartial, setHasSentPartial] = useState(false);
   
-  // 👇 This creates the Scarcity effect (random stock number)
+  // Scarcity Badge (random stock number)
   const [stock, setStock] = useState(11);
   useEffect(() => {
     setStock(Math.floor(Math.random() * (14 - 7 + 1)) + 7);
@@ -55,14 +55,8 @@ const OrderFormSection = () => {
       });
 
       if (response.ok) {
+        // Success! Tracking codes have been removed from here.
         setSubmitted(true);
-        
-        if (typeof window !== 'undefined' && (window as any).fbq) {
-          (window as any).fbq('track', 'Lead', { currency: 'MAD', value: 149.00 });
-        }
-        if (typeof window !== 'undefined' && (window as any).ttq) {
-          (window as any).ttq.track('CompletePayment', { currency: 'MAD', value: 149.00 });
-        }
       } else {
         throw new Error("Network response was not ok");
       }
@@ -88,11 +82,10 @@ const OrderFormSection = () => {
               src={heroProduct}
               alt="زيت أموز"
               className="mb-6 h-64 w-auto drop-shadow-2xl"
-              loading="lazy"
             />
             
             <div id="order-form" className="scroll-mt-6 w-full">
-              {/* 👇 Scarcity Badge 👇 */}
+              {/* Scarcity Badge */}
               <div className="mb-4 inline-block rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-600 animate-pulse">
                 🔥 عرض حصري: الكمية محدودة جداً! (تبقت {stock} عبوات فقط)
               </div>
@@ -182,10 +175,10 @@ const OrderFormSection = () => {
                   disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط ✨"}
                 </button>
                 
-                {/* 👇 Trust Badges Added Here 👇 */}
+                {/* Trust Badges */}
                 <div className="mt-6 grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                   <div className="flex flex-col items-center gap-2">
                     <Truck className="h-6 w-6 text-accent" />

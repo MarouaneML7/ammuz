@@ -22,8 +22,12 @@ const Header = () => {
         
         {/* 👇 Brand Logo Area 👇 */}
         {/* When you upload your logo, replace this <a> tag with your <img /> tag as we discussed earlier */}
-        <a href="#" className="text-2xl font-extrabold md:text-3xl">
-          <span className="text-gradient-gold">أموز</span>
+        <a href="#" className="flex items-center">
+          <img 
+            src="https://i.ibb.co/jkgDDsnZ/Ammuz-Logo.png" 
+            alt="أموز لوجو" 
+            className="h-10 w-auto md:h-12 object-contain" 
+          />
         </a>
 
         {/* 👇 CTA Button 👇 */}

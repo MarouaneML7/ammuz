@@ -4,9 +4,7 @@ const StickyBar = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // 👇 Now it ONLY watches the form wrapper, ignoring the picture
     const formBox = document.getElementById("form-wrapper");
-    
     if (!formBox) return;
 
     const observer = new IntersectionObserver(
@@ -22,11 +20,21 @@ const StickyBar = () => {
     );
 
     observer.observe(formBox);
-
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
+
+  // 👇 The new Smart Scroll Function 👇
+  const scrollToForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault(); // Stop the default instant jump
+    const form = document.getElementById("order-form");
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth" });
+      // Wait 400ms for images to load, then adjust perfectly
+      setTimeout(() => {
+        form.scrollIntoView({ behavior: "smooth" });
+      }, 400);
+    }
+  };
 
   return (
     <div 
@@ -38,9 +46,10 @@ const StickyBar = () => {
     >
       <a
         href="#order-form" 
+        onClick={scrollToForm} // 👇 We attached it here! 👇
         className="gradient-gold shadow-gold flex w-full items-center justify-center whitespace-nowrap rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-110 hover:shadow-2xl md:w-auto"
       >
-        اشتري الآن
+        اشتري الآن 🛒
       </a>
     </div>
   );

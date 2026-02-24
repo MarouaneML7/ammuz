@@ -1,6 +1,16 @@
 import heroProduct from "@/assets/hero-product.jpg";
 
 const HeroSection = () => {
+
+  const scrollToForm = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const form = document.getElementById("order-form");
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => form.scrollIntoView({ behavior: "smooth" }), 400);
+    }
+  };
+  
   return (
     <section className="relative overflow-hidden bg-background pb-16 pt-8">
       {/* Decorative bg */}
@@ -34,8 +44,9 @@ const HeroSection = () => {
           </p>
           <a
             href="#order-form"
-            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg">
-
+            onClick={scrollToForm}
+            className="gradient-gold shadow-gold inline-block rounded-full px-8 py-4 text-lg font-bold text-primary transition-all hover:scale-105 hover:shadow-lg"
+          >
             اطلبي الآن والدفع عند الاستلام
           </a>
         </div>

@@ -3,7 +3,6 @@ import { ShieldCheck, Truck, Banknote, Leaf } from "lucide-react";
 import heroProduct from "@/assets/hero-product.jpg";
 
 const OrderFormSection = () => {
-  // 🔴 PASTE YOUR GOOGLE APPS SCRIPT URL HERE 👇
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwUxw6n4YBvkcaZk0_yX3joNYaPqY3IA0CAcjkXWamMgcdUTGwMsQMDHjBQk8-8sgg/exec";
 
   const [formData, setFormData] = useState({
@@ -16,11 +15,27 @@ const OrderFormSection = () => {
   const [phoneError, setPhoneError] = useState("");
   const [hasSentPartial, setHasSentPartial] = useState(false);
   
-  // Scarcity Badge (random stock number)
+  // 👇 1. State to track if checkout has been initiated so we don't fire it 10 times 👇
+  const [hasInitiatedCheckout, setHasInitiatedCheckout] = useState(false);
+  
   const [stock, setStock] = useState(11);
   useEffect(() => {
     setStock(Math.floor(Math.random() * (14 - 7 + 1)) + 7);
   }, []);
+
+  // 👇 2. The function to fire InitiateCheckout 👇
+  const handleInitiateCheckout = () => {
+    if (!hasInitiatedCheckout) {
+      setHasInitiatedCheckout(true); // Mark it as fired
+      
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'InitiateCheckout', { currency: 'MAD', value: 149.00 });
+      }
+      if (typeof window !== 'undefined' && (window as any).ttq) {
+        (window as any).ttq.track('InitiateCheckout', { currency: 'MAD', value: 149.00 });
+      }
+    }
+  };
 
   const handlePhoneBlur = async () => {
     if (formData.phone.length >= 10 && !phoneError && !hasSentPartial) {
@@ -55,8 +70,16 @@ const OrderFormSection = () => {
       });
 
       if (response.ok) {
-        // Success! Tracking codes have been removed from here.
         setSubmitted(true);
+        
+        // 👇 3. The Lead Event is restored here! 👇
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead', { currency: 'MAD', value: 149.00 });
+        }
+        if (typeof window !== 'undefined' && (window as any).ttq) {
+          (window as any).ttq.track('CompletePayment', { currency: 'MAD', value: 149.00 });
+        }
+        
       } else {
         throw new Error("Network response was not ok");
       }
@@ -76,7 +99,6 @@ const OrderFormSection = () => {
         </h2>
 
         <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 md:flex-row-reverse">
-          {/* Product + Price */}
           <div className="flex w-full flex-col items-center text-center md:w-1/2">
             <img
               src={heroProduct}
@@ -85,7 +107,6 @@ const OrderFormSection = () => {
             />
             
             <div id="order-form" className="scroll-mt-6 w-full">
-              {/* Scarcity Badge */}
               <div className="mb-4 inline-block rounded-full bg-red-100 px-4 py-2 text-sm font-bold text-red-600 animate-pulse">
                 🔥 عرض حصري: الكمية محدودة جداً! (تبقت {stock} عبوات فقط)
               </div>
@@ -102,7 +123,6 @@ const OrderFormSection = () => {
             </div>
           </div>
 
-          {/* Form */}
           <div id="form-wrapper" className="w-full md:w-1/2">
             {submitted ? (
               <div className="rounded-2xl bg-card p-8 text-center shadow-lg">
@@ -123,6 +143,8 @@ const OrderFormSection = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    // 👇 4. Added onFocus here! 👇
+                    onFocus={handleInitiateCheckout}
                     placeholder="أدخلي اسمك الكامل"
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
                     disabled={isLoading}
@@ -145,6 +167,8 @@ const OrderFormSection = () => {
                       }
                     }}
                     onBlur={handlePhoneBlur}
+                    // 👇 4. Added onFocus here too (just in case they click phone first)! 👇
+                    onFocus={handleInitiateCheckout}
                     pattern="[0-9\s+]+"
                     title="المرجو إدخال أرقام فقط"
                     placeholder="06XXXXXXXX"
@@ -164,6 +188,8 @@ const OrderFormSection = () => {
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    // 👇 4. Added onFocus here too! 👇
+                    onFocus={handleInitiateCheckout}
                     placeholder="مثال: الدار البيضاء"
                     className="w-full rounded-lg border border-input bg-background px-4 py-3 text-foreground outline-none transition-all focus:ring-2 focus:ring-accent"
                     disabled={isLoading}
@@ -175,10 +201,9 @@ const OrderFormSection = () => {
                   disabled={isLoading || !!phoneError}
                   className="gradient-gold shadow-gold w-full rounded-lg py-4 text-lg font-bold text-primary transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70 disabled:hover:scale-100"
                 >
-                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط"}
+                  {isLoading ? "جاري إرسال الطلب..." : "أكدي طلبك الآن بـ 149 درهم فقط ✨"}
                 </button>
                 
-                {/* Trust Badges */}
                 <div className="mt-6 grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
                   <div className="flex flex-col items-center gap-2">
                     <Truck className="h-6 w-6 text-accent" />
@@ -197,7 +222,6 @@ const OrderFormSection = () => {
                     <span className="text-xs font-bold text-muted-foreground">ضمان الجودة</span>
                   </div>
                 </div>
-
               </form>
             )}
           </div>
